@@ -4,32 +4,43 @@
  */
 package lifestyletracker;
 
+import java.util.Scanner;
+
 /**
  *
  * @author sbc-student
  */
 public class TrackerConsole {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
-        Food food1 = new Food("Bread", 60);
-        Activity activity1 = new Activity("Jog",100);
+        LifestyleTracker tracker = new LifestyleTracker();
+        Scanner scanner = new Scanner(System.in);
+        String name;
         
-        System.out.println(food1);
-        System.out.println(food1.getFoodName());
-        System.out.println(food1.getFoodCalories());
-        System.out.println(activity1);
-        System.out.println(activity1.getActivityName());
-        System.out.println(activity1.getActCalorieValue());
-        food1.updateCalories(100);
-        System.out.println(food1);
-        activity1.updateCalories(500);
-        System.out.println(activity1);
-        
-        
+        if (args.length == 0) {
+            System.out.print("Enter your name: ");
+            name = scanner.nextLine();
+        } else {
+            name = args[0];
+        }
+
+        System.out.println("Welcome " + name + "!");
+
+        while (true) {
+            String input = scanner.nextLine();
+            String[] parts = input.split(" ");
+            String command = parts[0];
+            
+            switch (command) {
+                case "Food" -> tracker.addFood(parts[1], Double.parseDouble(parts[2]));
+                case "Activity" -> tracker.addActivity(parts[1], Double.parseDouble(parts[2]));
+                case "Eat" -> tracker.eat(parts[1], Double.parseDouble(parts[2]));
+                case "Perform" -> tracker.perform(parts[1], Double.parseDouble(parts[2]));
+                case "Report" -> System.out.println(tracker.report());
+                default -> System.out.println("Invalid command");
+            }
+        }
+
     }
-    
+
 }
